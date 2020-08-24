@@ -1,0 +1,20 @@
+#!/bin/bash
+#
+
+clear
+
+g++ -Wall         \
+    -Wextra       \
+    -Wshadow      \
+    -pedantic     \
+    -Werror       \
+    -std=c++17    \
+    -pthread      \
+    -o TemplatesAndVariadics \
+    TemplatesAndVariadics.cc
+
+if [ $? == 0 ]
+then
+    ./TemplatesAndVariadics
+    rm TemplatesAndVariadics
+fi

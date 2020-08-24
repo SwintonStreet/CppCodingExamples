@@ -1,0 +1,20 @@
+#!/bin/bash
+#
+
+# compile
+g++ -std=c++11  \
+    -Wall       \
+    -Wextra     \
+    -Wshadow    \
+    -Werror     \
+    -o initTest \
+    initialisationList.cc
+
+# if it sucessfully compiled, then run it!
+if [ $? == 0 ]
+then
+    echo "Running program"
+    ./initTest
+
+    rm initTest
+fi

@@ -1,0 +1,21 @@
+#!/bin/bash
+#
+
+clear
+
+g++ -Wall          \
+    -Wextra        \
+    -Wshadow       \
+    -Werror        \
+    -pedantic      \
+    -pthread       \
+    -o RAndLValues \
+    RAndLValues.cc
+
+if [ $? == 0 ]
+then
+
+    ./RAndLValues
+    rm RAndLValues
+
+fi

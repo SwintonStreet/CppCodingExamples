@@ -1,0 +1,20 @@
+#!/bin/bash
+#
+
+clear
+
+g++ -Wall           \
+    -Wextra         \
+    -Wshadow        \
+    -pedantic       \
+    -Werror         \
+    -std=c++17      \
+    -pthread        \
+    -o threadSafety \
+    threadSafety.cc
+
+if [ $? == 0 ]
+then
+    ./threadSafety
+    rm threadSafety
+fi

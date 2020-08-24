@@ -1,0 +1,33 @@
+#!/bin/bash
+#
+
+g++ --std=c++17              \
+    -Wall                    \
+    -Werror                  \
+    -Wshadow                 \
+    SocketsServer.cc         \
+    -o SocketsServer
+
+if [ $? == 0 ]; then
+    ./SocketsServer &
+    # can be used to pribt out the strings in the binary
+    # cat Strings | c++filt -t
+
+
+    g++ --std=c++17              \
+        -Wall                    \
+        -Werror                  \
+        -Wshadow                 \
+        SocketsClient.cc         \
+        -o SocketsClient
+
+    if [ $? == 0 ]; then
+        ./SocketsClient
+
+        # clean up
+        rm ./SocketsClient
+    fi
+
+    # clean up
+    rm SocketsServer
+fi

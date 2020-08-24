@@ -1,0 +1,20 @@
+#!/bin/bash
+#
+
+clear
+
+g++ -Wall         \
+    -Wextra       \
+    -Wshadow      \
+    -pedantic     \
+    -Werror       \
+    -std=c++17    \
+    -pthread      \
+    -o ReferenceConstructorDestructor \
+    ReferenceConstructorDestructor.cc
+
+if [ $? == 0 ]
+then
+    ./ReferenceConstructorDestructor
+    rm ReferenceConstructorDestructor
+fi

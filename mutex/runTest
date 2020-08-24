@@ -1,0 +1,20 @@
+#!/bin/bash
+#
+
+clear
+
+# compile
+g++ -std=c++17 -Wall           \
+               -Wextra         \
+               -Wshadow        \
+               -Werror         \
+               -pthread        \
+               -o MyFirstMutex \
+               MyFirstMutex.cc
+
+# if compliation was sucessful then run
+# the program
+if [ $? == 0 ];
+then
+    ./MyFirstMutex | c++filt -t
+fi

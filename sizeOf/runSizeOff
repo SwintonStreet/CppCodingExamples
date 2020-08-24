@@ -1,0 +1,17 @@
+#!/bin/bash
+#
+
+g++ --std=c++17 \
+    -Wall       \
+    -Werror     \
+    -Wshadow    \
+    sizeOf.cc  \
+    -o sizeOf
+
+if [ $? == 0 ]
+then
+
+    ./sizeOf
+
+    rm sizeOf
+fi

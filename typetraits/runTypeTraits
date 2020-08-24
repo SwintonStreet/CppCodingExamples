@@ -1,0 +1,22 @@
+#!/bin/bash
+#
+
+clear
+
+g++ -std=c++17        \
+    -Wall             \
+    -Wno-reorder      \
+    -Wextra           \
+    -Wempty-body      \
+    -Wshadow          \
+    -Werror           \
+    -o testTypeTraits \
+    typeTraits.cc
+
+# if it compiled then run it
+
+if [ $? == 0 ]
+then
+    ./testTypeTraits
+    rm testTypeTraits
+fi
