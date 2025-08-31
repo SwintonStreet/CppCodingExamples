@@ -3,12 +3,12 @@
 
 struct A
 {
-    int       a;
-    short int c;
+    int     a;
+    int16_t c;
 
     A() : a{2}, c{3} { std::cout << "A constructor 1#gc\n"; }
 
-    A(const int& /*i*/, const short int& j) : a{j}, c{j}
+    A(const int& /*i*/, const int16_t& j) : a{j}, c{j}
     {
         std::cout << "A constructor 2#gc\n";
     }
@@ -26,7 +26,7 @@ struct B : A
 
     B() : A{1, 2}, b{1} { std::cout << "B constructor#gc\n"; }
 
-    B(const int& i) : A{i, static_cast<short int>(i)}, b{1}
+    B(const int& i) : A{i, static_cast<int16_t>(i)}, b{1}
     {
         std::cout << "B constructor 2#gc\n";
     }
@@ -58,7 +58,7 @@ int main()
     // it can also create a reference, this isnt a copy so
     // the destructor isnt called as a reference to the
     // object continues to exist
-    const A& tempA2 = B{6};
+    [[maybe_unused]] const A& tempA2 = B{6};
 
     // tempA2 A constructor called
     // tempA2 B constructor called

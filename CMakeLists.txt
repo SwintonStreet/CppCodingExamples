@@ -40,4 +40,11 @@ set(CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} ${CLANG_COVERAGE_LINK_FLA
 
 # add sub directories
 add_subdirectory(atomic)
+add_subdirectory(constParameters)
+add_subdirectory(future)
+add_subdirectory(initialisationList)
+add_subdirectory(lambdaSyntax)
 add_subdirectory(mutex)
+add_subdirectory(referenceConstructorDestructor)
+add_subdirectory(RAndLValues)
+add_subdirectory(sizeOf)
