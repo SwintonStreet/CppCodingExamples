@@ -1,2 +1,11 @@
 # ignore any .cache
 *.cache/
+
+# ignorw build directories
+build*/
+
+# ignore vim swap files
+*.sw*
+
+# ignore compile commands json file
+compile_commands.json
