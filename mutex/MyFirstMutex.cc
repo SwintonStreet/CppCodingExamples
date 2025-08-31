@@ -1,45 +1,43 @@
 #include <iostream>
 #include <thread>
 #include <mutex>
-#include <string>
-#include <utility>
 #include <typeinfo>
 #include <vector>
 
 std::mutex mtx;
 
 template<typename t>
-struct s
+struct S
 {
 
     t i;
 
-    s(const t& iIn): i{iIn} {}
+    S(const t& iIn): i{iIn} {}
 
     // postfix ++ overload (c++ passes a int (0) with the call
     // to make it different to prefix)
-    s operator++ (int)
+    S operator++ (int)
     {
         return s(i++);
     }
 
     // prefix ++ overload
-    s operator++ ()
+    S operator++ ()
     {
-        return s(++i);
+        return S(++i);
     }
 
     // friend ostream overload definition
     friend std::ostream& operator<<(std::ostream& os,
-                                    const s&      val)
+                                    const S&      val)
     {
         os << val.i;
         return os;
     }
 };
 
-s<int> myVal {2};
-int myInt {1};
+S<int> myVal {2}; // GUARDED_BY_MUTEX
+int myInt {1};    // GUARDED_BY_MUTEX
 
 template<typename ...Sv >
 void printAndIncrement(const Sv... sv) noexcept
@@ -51,7 +49,7 @@ void printAndIncrement(const Sv... sv) noexcept
     // an exception being thrown
     std::lock_guard<std::mutex> lock(mtx);
 
-    ((std::cout << typeid(sv).name() << ' ' << 
+    ((std::cout << typeid(sv).name() << ' ' <<
                    sv                << ' ' <<
                    ++myVal           << '\n') , ...);
 
@@ -60,38 +58,26 @@ void printAndIncrement(const Sv... sv) noexcept
     std::cout << "------------------------\n";
 }
 
-//template<typename Sv >
-//void printAndIncrement(const Sv sv)
-//{
-//    mtx.lock();
-//
-//    {
-//        std::cout << sv << ' ' << ++myVal << '\n';
-//    }
-//
-//    mtx.unlock();
-//}
-
 int main()
 {
     printAndIncrement<std::string_view,
                       std::string_view>("123", "456");
     printAndIncrement("123", "456", "567", 5.0f, 125LL);
 
-    std::vector<std::thread> threads(4);
-    threads[0] = std::move(std::thread([&](){printAndIncrement("123",
-                                                               "234",
-                                                               "345",
-                                                               1);}));
-    threads[1] = std::move(std::thread([&](){printAndIncrement("123",
-                                                               "234",
-                                                               2.5);}));
-    threads[2] = std::move(std::thread([&](){printAndIncrement("123",
-                                                               "234",
-                                                               5);}));
-    threads[3] = std::move(std::thread([&](){printAndIncrement("123",
-                                                               "234",
-                                                               5L);}));
+    std::vector<std::jthread> threads(4);
+    threads[0] = std::jthread([&](){printAndIncrement("123",
+                                                      "234",
+                                                      "345",
+                                                      1);});
+    threads[1] = std::jthread([&](){printAndIncrement("123",
+                                                      "234",
+                                                      2.5);});
+    threads[2] = std::jthread([&](){printAndIncrement("123",
+                                                      "234",
+                                                      5);});
+    threads[3] = std::jthread([&](){printAndIncrement("123",
+                                                      "234",
+                                                      5);});
 
     for (auto& th : threads) {th.join();}
 
