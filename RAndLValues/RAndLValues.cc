@@ -1,7 +1,8 @@
 #include <iostream>
 #include <vector>
 
-struct A {
+struct A
+{
     int arr[5];
 };
 

@@ -1,5 +1,5 @@
-#include<iostream>
-#include<thread>
+#include <iostream>
+#include <thread>
 
 struct s
 {
@@ -7,13 +7,9 @@ struct s
 
     // threads are considered joinable when they have
     // a function to be joined
-    s() : th([](){return 0;})
-    {}
+    s() : th([]() { return 0; }) {}
 
-    auto join ()
-    {
-        return th.join();
-    }
+    auto join() { return th.join(); }
 
     ~s()
     {
@@ -30,7 +26,8 @@ struct s
     }
 };
 
-int main () {
+int main()
+{
 
     std::cout << "Hello World!\n";
 

@@ -1,20 +1,16 @@
 #include <iostream>
 #include <vector>
 
-struct A {
+struct A
+{
     int       a;
     short int c;
 
-    A() : a{2}, c{3}
+    A() : a{2}, c{3} { std::cout << "A constructor 1#gc\n"; }
+
+    A(const int& /*i*/, const short int& j) : a{j}, c{j}
     {
-        std:: cout << "A constructor 1#gc\n";
-    }
-    A(const int&       /*i*/,
-      const short int& j) :
-        a{j},
-        c{j}
-    {
-        std:: cout << "A constructor 2#gc\n";
+        std::cout << "A constructor 2#gc\n";
     }
 
     virtual ~A()
@@ -24,27 +20,18 @@ struct A {
     }
 };
 
-struct B : A {
+struct B : A
+{
     int b;
 
-    B () :
-        A{1,2},
-        b{1}
+    B() : A{1, 2}, b{1} { std::cout << "B constructor#gc\n"; }
+
+    B(const int& i) : A{i, static_cast<short int>(i)}, b{1}
     {
-        std:: cout << "B constructor#gc\n";
+        std::cout << "B constructor 2#gc\n";
     }
 
-    B (const int& i) :
-        A{i,static_cast<short int>(i)},
-        b{1}
-    {
-        std:: cout << "B constructor 2#gc\n";
-    }
-
-    virtual ~B()
-    {
-        std::cout << "B destructor#gc\n";
-    }
+    virtual ~B() { std::cout << "B destructor#gc\n"; }
 };
 
 int main()

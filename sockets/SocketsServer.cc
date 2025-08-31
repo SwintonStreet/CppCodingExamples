@@ -1,22 +1,23 @@
+#include <cstring>
 #include <iostream>
 #include <string>
-#include <cstring>
-#include <sys/socket.h>
-#include <sys/types.h>
+
 #include <netinet/in.h>
 #include <stdio.h>
+#include <sys/socket.h>
+#include <sys/types.h>
 #include <unistd.h>
 
 #define PORT 8080
 
-int main ()
+int main()
 {
     std::cout << "Hello world!\n";
 
-    char buffer[1024] {0};
+    char               buffer[1024]{0};
     struct sockaddr_in address;
-    int opt = 1;
-    int addrlen = sizeof(address);
+    int                opt     = 1;
+    int                addrlen = sizeof(address);
 
     // create socket and handle set up failure
     int server_fd = socket(AF_INET, SOCK_STREAM, 0);
@@ -32,7 +33,7 @@ int main ()
                    SOL_SOCKET,
                    SO_REUSEADDR | SO_REUSEPORT,
                    &opt,
-                   sizeof(opt)) )
+                   sizeof(opt)))
     {
         perror("setsockopt failed");
         exit(EXIT_FAILURE);
@@ -43,25 +44,22 @@ int main ()
     address.sin_port        = htons(PORT);
 
     // binding the socket to 8080
-    if (bind(server_fd,
-             (struct sockaddr *)&address,
-             sizeof(address)) < 0)
+    if (bind(server_fd, (struct sockaddr*)&address, sizeof(address)) < 0)
     {
         perror("bind failure");
         exit(EXIT_FAILURE);
     }
 
     // listen for incoming message
-    if ( listen(server_fd, 3) < 0)
+    if (listen(server_fd, 3) < 0)
     {
         perror("listen failure");
         exit(EXIT_FAILURE);
     }
     std::cout << "listened\n";
 
-    int new_socket = accept(server_fd,
-                            (struct sockaddr *) &address,
-                            (socklen_t*) &addrlen);
+    int new_socket =
+        accept(server_fd, (struct sockaddr*)&address, (socklen_t*)&addrlen);
 
     if (new_socket < 0)
     {
@@ -75,13 +73,13 @@ int main ()
         bzero(buffer, 1024);
         read(new_socket, buffer, 1024);
 
-        if ( strcmp(buffer, "EXIT") == 0 )
+        if (strcmp(buffer, "EXIT") == 0)
         {
             std::cout << "server exiting now\n";
             break;
         }
 
-        std::cout << "got: " << buffer << '\n' ;
+        std::cout << "got: " << buffer << '\n';
 
         send(new_socket, buffer, strlen(buffer), 0);
     }

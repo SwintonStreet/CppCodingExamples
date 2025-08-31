@@ -10,13 +10,12 @@ struct emptyStruct
 {
 };
 
-int main ()
+int main()
 {
 
     std::string myEmptyString;
     emptyClass  myEmptyClass;
     emptyStruct myEmptyStruct;
-
 
     std::cout << "empty string  :" << sizeof(myEmptyString) << '\n';
     std::cout << "empty string 2:" << sizeof(std::string) << '\n';
@@ -30,7 +29,7 @@ int main ()
     std::cout << "long int*     :" << sizeof(long int*) << '\n';
     std::cout << "char          :" << sizeof(char) << '\n';
     std::cout << "char*         :" << sizeof(char*) << '\n';
-    std::cout << "unsigned char :" << sizeof(unsigned char)<< '\n';
+    std::cout << "unsigned char :" << sizeof(unsigned char) << '\n';
     std::cout << "unsigned char*:" << sizeof(unsigned char*) << '\n';
 
     return 0;

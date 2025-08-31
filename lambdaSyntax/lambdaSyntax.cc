@@ -6,7 +6,7 @@ int main()
     int doNotChangeMe = 2;
 
     std::cout << "Pre\n"
-              << "change me       : " << changeMe      << '\n'
+              << "change me       : " << changeMe << '\n'
               << "do not change me: " << doNotChangeMe << '\n';
 
     // nodiscard can not be directly applied to lambdas
@@ -20,22 +20,19 @@ int main()
     // A standard variable can also be passed in, auto is only allowed
     // in c++14 and onwards. auto follows the template deduction rules
     // in this case.
-    auto l = [& changeMe,
-              doNotChangeMe]
-             (const auto& i) mutable
-             {
-                 changeMe      += i;
-                 doNotChangeMe += i;
-                 return 5;
-             };
+    auto l = [&changeMe, doNotChangeMe](const auto& i) mutable
+    {
+        changeMe += i;
+        doNotChangeMe += i;
+        return 5;
+    };
 
     // call the lambda to make it change/not change
     // the values
     l(1);
 
-
     std::cout << "Post\n"
-              << "change me       : " << changeMe      << '\n'
+              << "change me       : " << changeMe << '\n'
               << "do not change me: " << doNotChangeMe << '\n';
 
     return l(1);

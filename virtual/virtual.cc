@@ -4,6 +4,7 @@
 struct A
 {
     void func() { std::cout << "A\n"; }
+
     virtual void func2() = 0;
 };
 
@@ -11,21 +12,27 @@ struct B : A
 {
     // struct B has access to struct As version of
     // functions/members using the namespace A::
-    void func() { std::cout << "B"; A::func();}
-    void func2() override { std::cout << "1\n";}
+    void func()
+    {
+        std::cout << "B";
+        A::func();
+    }
+
+    void func2() override { std::cout << "1\n"; }
 };
 
 struct C : A
 {
     void func() { std::cout << "C\n"; }
-    void func2() override { std::cout << "2\n";}
+
+    void func2() override { std::cout << "2\n"; }
 };
 
 int main()
 {
     // structs B & C inherit from A
-    B&& b {};
-    C&& c {};
+    B&& b{};
+    C&& c{};
 
     // we define A pointers to the references
     // allowed because B/C inherit from A

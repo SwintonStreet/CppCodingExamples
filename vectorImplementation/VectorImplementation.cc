@@ -1,17 +1,16 @@
 #include <iostream>
 #include <stdexcept>
 
-template<typename T>
+template <typename T>
 class Vector
 {
   public:
-
     // constructor
-    explicit Vector( size_t n, const T& v): size{n}
+    explicit Vector(size_t n, const T& v) : size{n}
     {
         data = new T[n];
 
-        for (size_t i = 0; i<n; ++i)
+        for (size_t i = 0; i < n; ++i)
         {
             try
             {
@@ -35,13 +34,13 @@ class Vector
     {
         // only copy data if required
         // i.e. if this is a different vector
-        if ( data != other.data )
+        if (data != other.data)
         {
             delete[] data;
 
             data = new T[other.size];
 
-            for (size_t i = 0; i<other.size; ++i)
+            for (size_t i = 0; i < other.size; ++i)
             {
                 try
                 {
@@ -64,7 +63,7 @@ class Vector
 
     T& operator[](const unsigned int i)
     {
-        if ( i >= size )
+        if (i >= size)
         {
             std::out_of_range oppps{"Out of range"};
             throw oppps;
@@ -85,15 +84,9 @@ class Vector
     typedef T*       iterator;
     typedef const T* const_iterator;
 
-    iterator begin()
-    {
-        return &data[0];
-    }
+    iterator begin() { return &data[0]; }
 
-    iterator end()
-    {
-        return &data[size];
-    }
+    iterator end() { return &data[size]; }
 
     // members
     size_t size;
@@ -107,12 +100,12 @@ int main()
 
     second = first;
 
-    for ( const auto& element : first )
+    for (const auto& element : first)
     {
         std::cout << "elelment: " << element << '\n';
     }
 
-    for ( auto& element : first )
+    for (auto& element : first)
     {
         element = 10;
         std::cout << "elelment: " << element << '\n';
