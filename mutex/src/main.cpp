@@ -10,7 +10,7 @@ namespace
 template <typename t>
 struct S
 {
-    S(const t& iIn) : i{iIn} {}
+    explicit S(const t& iIn) : i{iIn} {}
 
     // postfix ++ overload (c++ passes a int (0) with the call
     // to make it different to prefix)
@@ -56,7 +56,7 @@ void printAndIncrement(const Sv&... sv)
 int main()
 {
     printAndIncrement<std::string_view, std::string_view>("123", "456");
-    printAndIncrement("123", "456", "567", 5.0f, 125LL);
+    printAndIncrement("123", "456", "567", 5.0F, 125LL);
 
     std::vector<std::jthread> threads;
     threads.emplace_back([] { printAndIncrement("123", "234", "345", 1); });
