@@ -1,16 +1,21 @@
 #include <iostream>
 #include <vector>
 
+namespace
+{
+
 template <typename T>
 void printSize(T&& t)
 {
     std::cout << "size is: " << t.size() << "#gc\n";
 }
 
+} // namespace
+
 template <typename T>
 struct A
 {
-    short int i;
+    int16_t i{};
 
     void func() { std::cout << "-- " << i << " crtp!#gc\n"; }
 };
@@ -19,7 +24,7 @@ struct B : A<B>
 {
     B() = default;
 
-    B(int&& j) : A<B>{static_cast<short int>(j)} {}
+    B(int&& j) : A<B>{static_cast<int16_t>(j)} {}
 };
 
 template <typename T1>
@@ -39,7 +44,7 @@ void varFunc(const T1& t1, const T2&... t2)
 template <typename Fun, typename... Ts>
 void seq_for_all(Fun f, const Ts&... args)
 {
-    std::initializer_list<int>{((void)f(args), 0)...};
+    (void)std::initializer_list<int>{((void)f(args), 0)...};
 }
 
 template <typename... T2>

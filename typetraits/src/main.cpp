@@ -1,23 +1,21 @@
 #include <iostream>
-#include <string>
+#include <string_view>
 #include <type_traits>
 
-using namespace std::string_literals;
+namespace
+{
 
 struct testType
 {
-    // testType(int inVal): val {inVal} {};
-    testType()  = default;
-    ~testType() = default;
-
-    int val, val2;
+    int val{};
+    int val2{};
 };
 
 template <typename t>
 constexpr bool is_float = std::is_same<t, float>::value;
 
 template <class c>
-const std::string is_Const = std::is_const<c>::value ? "Yes"s : "No"s;
+const std::string_view is_Const = std::is_const<c>::value ? "Yes" : "No";
 
 template <typename t1, typename t2>
 constexpr t1 AddIfInt(t1 type1, t2 type2)
@@ -27,10 +25,12 @@ constexpr t1 AddIfInt(t1 type1, t2 type2)
                : type1;
 }
 
+} // namespace
+
 int main()
 {
 
-    testType t1{.val = 0, .val2 = 3};
+    auto t1 = testType{0, 3};
 
     std::cout << "t1 trivially constructable: "
               << std::is_trivially_constructible<testType>::value << '\n';

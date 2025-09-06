@@ -1,9 +1,8 @@
+#include <cstdio>
 #include <cstring>
 #include <iostream>
-#include <string>
 
 #include <netinet/in.h>
-#include <stdio.h>
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <unistd.h>
@@ -44,7 +43,9 @@ int main()
     address.sin_port        = htons(PORT);
 
     // binding the socket to 8080
-    if (bind(server_fd, (struct sockaddr*)&address, sizeof(address)) < 0)
+    if (bind(server_fd,
+             reinterpret_cast<struct sockaddr*>(&address),
+             sizeof(address)) < 0)
     {
         perror("bind failure");
         exit(EXIT_FAILURE);
@@ -58,8 +59,9 @@ int main()
     }
     std::cout << "listened\n";
 
-    int new_socket =
-        accept(server_fd, (struct sockaddr*)&address, (socklen_t*)&addrlen);
+    int new_socket = accept(server_fd,
+                            reinterpret_cast<struct sockaddr*>(&address),
+                            reinterpret_cast<socklen_t*>(&addrlen));
 
     if (new_socket < 0)
     {

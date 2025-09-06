@@ -3,16 +3,18 @@
 
 struct A
 {
-    void func() { std::cout << "A\n"; }
+    static void func() { std::cout << "A\n"; }
 
     virtual void func2() = 0;
+
+    virtual ~A() = default;
 };
 
 struct B : A
 {
     // struct B has access to struct As version of
     // functions/members using the namespace A::
-    void func()
+    static void func()
     {
         std::cout << "B";
         A::func();
@@ -23,7 +25,7 @@ struct B : A
 
 struct C : A
 {
-    void func() { std::cout << "C\n"; }
+    static void func() { std::cout << "C\n"; }
 
     void func2() override { std::cout << "2\n"; }
 };

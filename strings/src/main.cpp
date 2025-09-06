@@ -33,9 +33,11 @@ int main()
 
     // For this to work, the 'rvalue' const char* data must be statically
     // stored by the program, thus a pointer to it will always work?
-    std::cout << (const void*)tmp << " - " << tmp << '\n'
-              << (const void*)tmp2 << " - " << tmp2 << '\n'
-              << ((const int*)tmp2 - (const int*)tmp) << '\n';
+    std::cout << reinterpret_cast<const void*>(tmp) << " - " << tmp << '\n'
+              << reinterpret_cast<const void*>(tmp2) << " - " << tmp2 << '\n'
+              << (reinterpret_cast<const int*>(tmp2) -
+                  reinterpret_cast<const int*>(tmp))
+              << '\n';
 
     std::string st{""};
 

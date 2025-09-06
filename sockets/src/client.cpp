@@ -1,10 +1,9 @@
+#include <cstdio>
 #include <cstring>
 #include <iostream>
-#include <string>
 
 #include <fcntl.h>
 #include <netinet/in.h>
-#include <stdio.h>
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <unistd.h>
@@ -43,8 +42,9 @@ int main()
     address.sin_addr.s_addr = INADDR_ANY;
     address.sin_port        = htons(PORT);
 
-    long int connection{
-        connect(server_fd, (struct sockaddr*)&address, sizeof(address))};
+    long int connection{connect(server_fd,
+                                reinterpret_cast<struct sockaddr*>(&address),
+                                sizeof(address))};
 
     if (connection < 0)
     {
